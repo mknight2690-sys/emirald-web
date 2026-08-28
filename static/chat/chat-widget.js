@@ -268,35 +268,89 @@ Is there something specific you'd like help with while I reconnect?`);
             max_tokens: 1500
         };
 
-        // Try the rotator first (free LLM)
+        // Connection retry logic with exponential backoff
+        const maxRetries = 3;
+        const baseDelay = 1000; // 1 second
+
+        // Try rotator first with retries
+        for (let attempt = 0; attempt < maxRetries; attempt++) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+                const response = await fetch(`${this.rotatorUrl}/v1/chat/completions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.choices[0]?.message?.content || 'I\'m ready to help! What can I assist you with?';
+                } else {
+                    console.warn(`Rotator returned ${response.status}, attempt ${attempt + 1}/${maxRetries}`);
+                }
+            } catch (e) {
+                if (e.name === 'AbortError') {
+                    console.warn(`Rotator request timed out, attempt ${attempt + 1}/${maxRetries}`);
+                } else {
+                    console.warn(`Rotator connection error (attempt ${attempt + 1}/${maxRetries}):`, e.message);
+                }
+            }
+
+            // Exponential backoff before retry
+            if (attempt < maxRetries - 1) {
+                const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 500;
+                console.log(`Retrying rotator in ${Math.round(delay)}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+
+        // Rotator failed after retries - try local Flask API
+        console.warn('Rotator unavailable after retries, trying local API...');
         try {
-            const response = await fetch(`${this.rotatorUrl}/v1/chat/completions`, {
+            const localResponse = await fetch(this.apiEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            if (response.ok) {
-                const data = await response.json();
-                return data.choices[0]?.message?.content || 'I\'m ready to help! What can I assist you with?';
+            if (localResponse.ok) {
+                const data = await localResponse.json();
+                return data.response || 'I\'m here to help! What can I do for you?';
             }
         } catch (e) {
-            console.warn('Rotator unavailable, trying local API:', e);
+            console.warn('Local API also unavailable:', e.message);
         }
 
-        // Fallback to local Flask API
-        const localResponse = await fetch(this.apiEndpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        // Final fallback - return helpful message based on context
+        return this.getFallbackResponse();
+    }
 
-        if (localResponse.ok) {
-            const data = await localResponse.json();
-            return data.response || 'I\'m here to help! What can I do for you?';
+    getFallbackResponse() {
+        const responses = {
+            greeting: "Hello! I'm your Emirald AI Support Specialist. While I'm having trouble connecting to the full AI brain right now, I can still help with common issues!",
+            install: "For installation issues: Run the installer as Administrator. If Windows SmartScreen blocks it, click 'More info' → 'Run anyway'. Disable antivirus temporarily during install.",
+            api: "For BloFin API issues: Check your API Key, Secret, and Passphrase in the Setup tab. Make sure permissions include Read + Trade (not withdraw). Test with the 'Test Credentials' button.",
+            rotator: "The LLM rotator runs on port 8082. If it's not starting, check Python 3.12+ is installed and the free-claude-router folder exists.",
+            dashboard: "Dashboard runs on port 8766. If not loading, check config.yaml exists and port 8766 is free.",
+            default: "I'm your Emirald AI Support Specialist! While I reconnect to the full AI, here's quick help:\n\n**Common issues:**\n• **Install errors** → Run as Admin, allow SmartScreen\n• **API keys** → Test in Setup tab, check permissions\n• **Rotator** → Port 8082, check Python venv\n• **Dashboard** → Port 8766, check config.yaml\n• **Bot won't start** → Check .env has valid keys\n\nWhat specific issue can I help you with?"
+        };
+
+        // Simple keyword matching
+        const lastUserMsg = this.messages.filter(m => m.role === 'user').pop();
+        if (lastUserMsg) {
+            const msg = lastUserMsg.content.toLowerCase();
+            if (msg.includes('install') || msg.includes('setup')) return responses.install;
+            if (msg.includes('api') || msg.includes('key') || msg.includes('secret')) return responses.api;
+            if (msg.includes('rotator') || msg.includes('llm') || msg.includes('model')) return responses.rotator;
+            if (msg.includes('dashboard') || msg.includes('port 8766')) return responses.dashboard;
+            if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) return responses.greeting;
         }
-
-        throw new Error('All AI endpoints unavailable');
+        return responses.default;
     }
 
     addMessage(role, content) {
