@@ -6,7 +6,9 @@
 class EmiraldChatWidget {
     constructor(options = {}) {
         this.apiEndpoint = options.apiEndpoint || '/api/chat';
-        this.rotatorUrl = options.rotatorUrl || 'http://127.0.0.1:8082';
+        // Use deployed HF Space rotator when available, fallback to local
+        this.rotatorUrl = options.rotatorUrl ||
+            (typeof HF_ROTATOR_URL !== 'undefined' ? HF_ROTATOR_URL : 'http://127.0.0.1:8082');
         this.isOpen = false;
         this.messages = [];
         this.sessionId = this.generateSessionId();
@@ -213,14 +215,22 @@ I'm here to help! I know the codebase inside and out — from the Electron main 
         this.addMessage('user', text);
         input.value = '';
 
-        // Show typing indicator
+        // Show typing indicator with auto-hide timeout
         this.showTyping(true);
+        const typingTimeout = setTimeout(() => {
+            if (this.isTyping) {
+                console.warn('Typing indicator timed out, hiding');
+                this.showTyping(false);
+            }
+        }, 30000); // 30 second max
 
         try {
             const response = await this.callAI(text);
+            clearTimeout(typingTimeout);
             this.showTyping(false);
             this.addMessage('assistant', response);
         } catch (error) {
+            clearTimeout(typingTimeout);
             this.showTyping(false);
             this.addMessage('assistant', `I apologize — I'm having trouble connecting right now. Let me try a different approach.
 

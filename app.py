@@ -666,7 +666,9 @@ YOUR APPROACH:
 6. If you don't know something, be honest and offer to escalate"""
 
     # Try to proxy to free LLM rotator first
-    rotator_url = 'http://127.0.0.1:8082/v1/chat/completions'
+    # Use deployed HF Space rotator for public access, fallback to local
+import os
+rotator_url = os.environ.get('HF_ROTATOR_URL', 'http://127.0.0.1:8082') + '/v1/chat/completions'
     payload = {
         'messages': [
             {'role': 'system', 'content': system_prompt},
