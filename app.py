@@ -620,6 +620,104 @@ def api_heartbeat():
     return jsonify({'valid': False}), 401
 
 # ---------------------------------------------------------------------------
+# AI Chat Support API
+# ---------------------------------------------------------------------------
+
+@app.route('/api/chat', methods=['POST'])
+def api_chat():
+    """AI Chat Support endpoint - proxies to free LLM rotator or provides fallback"""
+    data = request.get_json()
+    if not data:
+        return jsonify({'error': 'Invalid request'}), 400
+
+    messages = data.get('messages', [])
+    session_id = data.get('session_id', '')
+    user_info = data.get('user_info', {})
+    temperature = data.get('temperature', 0.7)
+    max_tokens = data.get('max_tokens', 1500)
+
+    # System prompt for Emirald AI Support Specialist
+    system_prompt = """You are Emirald AI Support Specialist, a 24/7 customer support agent for Emirald - an AI-powered automated crypto trading bot for BloFin.
+
+YOUR PERSONALITY:
+- Warm, personable, and courteous
+- Deeply knowledgeable about Emirald's codebase, architecture, and features
+- Patient with beginners, technical with advanced users
+- Available 24/7, never rushed
+- Speak naturally, use emojis appropriately
+- Always offer to help further
+
+YOUR EXPERTISE:
+- Emirald Electron app (main.js, preload.js, renderer tabs)
+- Free Claude Router (LLM rotator on port 8082)
+- Emirald Dashboard (FastAPI on port 8766)
+- Emirald Trading Bot (Python, 60-second LLM decisions, BloFin USDT-M Futures)
+- Stripe billing, subscriptions, webhooks
+- BloFin API integration (HMAC-SHA256, 10x leverage, 3% SL, 25% TP)
+- GitHub Pages deployment, Electron builder, NSIS installers
+- Common issues: installation, API keys, credential testing, bot startup, dashboard access
+
+YOUR APPROACH:
+1. Greet warmly, ask how you can help
+2. Diagnose issues systematically
+3. Provide step-by-step solutions
+4. Share relevant code snippets when helpful
+5. Always end with "Is there anything else I can help you with?"
+6. If you don't know something, be honest and offer to escalate"""
+
+    # Try to proxy to free LLM rotator first
+    rotator_url = 'http://127.0.0.1:8082/v1/chat/completions'
+    payload = {
+        'messages': [
+            {'role': 'system', 'content': system_prompt},
+            *messages
+        ],
+        'temperature': temperature,
+        'max_tokens': max_tokens,
+        'session_id': session_id,
+        'user_info': user_info
+    }
+
+    try:
+        response = requests.post(rotator_url, json=payload, timeout=30)
+        if response.ok:
+            data = response.json()
+            return jsonify({
+                'response': data.get('choices', [{}])[0].get('message', {}).get('content', 'I\'m here to help! What can I assist you with?'),
+                'source': 'rotator'
+            })
+    except Exception as e:
+        print(f'Rotator unavailable: {e}')
+
+    # Fallback responses for common queries when rotator is down
+    fallback_responses = {
+        'install': "I'm having trouble connecting to the AI rotator right now, but I can still help! For installation issues:\n\n**Common fixes:**\n• Run installer as Administrator\n• If Windows SmartScreen blocks it: Click 'More info' → 'Run anyway'\n• Disable antivirus temporarily during install\n• Ensure Windows 10/11 (64-bit)\n\nThe installer is at `C:\\Users\\Downloads\\Emirald Setup 1.0.0.exe`\n\nWhat specific error are you seeing?",
+        'api key': "For BloFin API key issues:\n\n**Checklist:**\n1. API Key, Secret, and Passphrase all entered correctly\n2. Broker ID (optional) - leave blank if not provided\n3. Permissions: Read + Trade (not withdraw)\n4. IP whitelist: Add your IP or leave empty\n\nTest in the Setup tab → 'Test Credentials' button\n\nWhat error does the credential test show?",
+        'rotator': "The free LLM rotator runs on port 8082. If it's not starting:\n\n**Check:**\n• Python 3.12+ in Emirald venv\n• Port 8082 not in use\n• `free-claude-router` folder exists\n• Run manually: `python router.py`\n\nThe Electron app starts it automatically on the Setup tab.",
+        'dashboard': "Dashboard runs on port 8766 (FastAPI/uvicorn). If not loading:\n\n**Check:**\n• Config.yaml exists in Emirald folder\n• Port 8766 free\n• Uvicorn installed in venv\n• Run: `python -m uvicorn apps.dashboard.main:app --port 8766`\n\nAccess at http://127.0.0.1:8766/",
+        'stripe': "For Stripe billing issues:\n\n• Check webhook endpoint: `/webhook/stripe`\n• Events: checkout.session.completed, subscription.updated/deleted, invoice.payment_failed\n• Test mode vs live mode keys\n• Customer portal for subscription management\n\nWhat specific billing issue?",
+        'default': "I'm your Emirald AI Support Specialist! 👋 While I reconnect to the full AI, here's quick help:\n\n**Most common issues:**\n• **Install errors** → Run as Admin, allow SmartScreen\n• **API keys** → Test in Setup tab, check permissions\n• **Rotator** → Port 8082, check Python venv\n• **Dashboard** → Port 8766, check config.yaml\n• **Bot won't start** → Check .env has valid keys\n\nWhat are you working on? I'll give you specific steps."
+    }
+
+    # Simple keyword matching for fallback
+    user_msg = ''
+    for msg in messages:
+        if msg.get('role') == 'user':
+            user_msg = msg.get('content', '').lower()
+
+    response_text = fallback_responses['default']
+    for key, resp in fallback_responses.items():
+        if key in user_msg:
+            response_text = resp
+            break
+
+    return jsonify({
+        'response': response_text,
+        'source': 'fallback',
+        'note': 'Using fallback responses - LLM rotator unavailable'
+    })
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
