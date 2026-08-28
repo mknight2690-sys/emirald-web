@@ -7,8 +7,13 @@ class EmiraldChatWidget {
     constructor(options = {}) {
         this.apiEndpoint = options.apiEndpoint || '/api/chat';
         // Use deployed HF Space rotator when available, fallback to local
-        this.rotatorUrl = options.rotatorUrl ||
-            (typeof HF_ROTATOR_URL !== 'undefined' ? HF_ROTATOR_URL : 'http://127.0.0.1:8082');
+        // Default to HF Space rotator for public site, local for development
+        const defaultRotatorUrl = (typeof HF_ROTATOR_URL !== 'undefined' && HF_ROTATOR_URL)
+            ? HF_ROTATOR_URL
+            : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://127.0.0.1:8082'
+                : 'https://mknight2690-sys-emirald-rotator.hf.space');
+        this.rotatorUrl = options.rotatorUrl || defaultRotatorUrl;
         this.isOpen = false;
         this.messages = [];
         this.sessionId = this.generateSessionId();
