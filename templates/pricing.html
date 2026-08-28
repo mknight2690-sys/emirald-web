@@ -1,0 +1,323 @@
+{% extends "base.html" %}
+
+{% block title %}Pricing - Emirald AI Trading Bot{% endblock %}
+{% block meta_title %}Pricing - Emirald AI Trading Bot{% endblock %}
+{% block meta_description %}Choose the perfect plan for your trading needs. Starter $19/mo, Pro $47/mo, Enterprise $99/mo. 14-day free trial included.{% endblock %}
+{% block og_title %}Emirald Pricing Plans - AI Trading Bot{% endblock %}
+{% block og_description %}Flexible pricing for every trader. Start with $19/mo, upgrade to Pro for $47/mo. 14-day free trial, no credit card required.{% endblock %}
+{% block twitter_title %}Emirald Pricing - AI Trading Bot Plans{% endblock %}
+{% block twitter_description %}Affordable AI trading plans. Starter $19, Pro $47, Enterprise $99. Free trial included. Start trading smarter today.{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="512" height="512" rx="90" fill="url(#grad)"/>
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0d8a6f"/>
+                        <stop offset="100%" stop-color="#0a7b8c"/>
+                    </linearGradient>
+                </defs>
+                <path d="M256 48c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                <circle cx="256" cy="256" r="120" fill="none" stroke="#28e0c0" stroke-width="8"/>
+                <rect x="200" y="200" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="232" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="264" width="80" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="296" width="60" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <path d="M256 356c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                <path d="M196 396l60 60 60-60" stroke="#28e0c0" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Emirald
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#features">Features</a>
+            <a href="/pricing" class="active">Pricing</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <div class="auth-buttons">
+            {% if user %}
+                <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+                <a href="/logout" class="btn btn-secondary">Logout</a>
+            {% else %}
+                <a href="/login" class="btn btn-secondary">Login</a>
+                <a href="/register" class="btn btn-primary">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content text-center">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Choose the perfect plan for your trading journey. Start free, upgrade anytime.</p>
+            <div class="hero-buttons">
+                <a href="/register" class="btn btn-primary">Start 14-Day Free Trial</a>
+                <a href="#comparison" class="btn btn-secondary">Compare Plans</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="pricing">
+    <div class="pricing-container">
+        <div class="section-header">
+            <h2>Choose Your Plan</h2>
+            <p>All plans include our core AI trading engine with 14-day free trial</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card scroll-reveal">
+                <h3>Starter</h3>
+                <div class="pricing-price">$19<span>/month</span></div>
+                <p class="pricing-description">Perfect for beginners testing the waters</p>
+                <ul class="pricing-features">
+                    <li>✓ Up to 3 trading pairs</li>
+                    <li>✓ Basic AI model access</li>
+                    <li>✓ Standard risk management (3% SL / 25% TP)</li>
+                    <li>✓ Email support</li>
+                    <li>✓ Monthly performance reports</li>
+                    <li>✓ Basic dashboard</li>
+                    <li>✗ Custom strategies</li>
+                    <li>✗ Priority support</li>
+                    <li>✗ Paper trading mode</li>
+                </ul>
+                <a href="/register" class="btn btn-secondary">Get Started</a>
+            </div>
+            <div class="pricing-card featured scroll-reveal">
+                <h3>Pro</h3>
+                <div class="pricing-price">$47<span>/month</span></div>
+                <p class="pricing-description">Most popular choice for serious traders</p>
+                <ul class="pricing-features">
+                    <li>✓ Everything in Starter</li>
+                    <li>✓ Unlimited trading pairs</li>
+                    <li>✓ All AI models included</li>
+                    <li>✓ Advanced risk management</li>
+                    <li>✓ Priority email support</li>
+                    <li>✓ Real-time analytics</li>
+                    <li>✓ Custom strategies</li>
+                    <li>✓ Paper trading mode</li>
+                    <li>✓ Trading API access</li>
+                    <li>✗ 24/7 phone support</li>
+                    <li>✗ Custom AI training</li>
+                </ul>
+                <a href="/register" class="btn btn-primary">Start Free Trial</a>
+            </div>
+            <div class="pricing-card scroll-reveal">
+                <h3>Enterprise</h3>
+                <div class="pricing-price">$99<span>/month</span></div>
+                <p class="pricing-description">For professional traders and teams</p>
+                <ul class="pricing-features">
+                    <li>✓ Everything in Pro</li>
+                    <li>✓ Dedicated account manager</li>
+                    <li>✓ 24/7 phone support</li>
+                    <li>✓ Custom AI training</li>
+                    <li>✓ White-label option</li>
+                    <li>✓ Volume discounts</li>
+                    <li>✓ API rate limits increased</li>
+                    <li>✓ Custom integrations</li>
+                    <li>✓ Advanced reporting</li>
+                    <li>✓ Team management</li>
+                </ul>
+                <a href="/contact" class="btn btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Section -->
+<section id="comparison" class="features">
+    <div class="features-container">
+        <div class="section-header">
+            <h2>Feature Comparison</h2>
+            <p>See exactly what's included in each plan</p>
+        </div>
+        <div class="comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Starter</th>
+                        <th>Pro</th>
+                        <th>Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Price</td>
+                        <td>$19/month</td>
+                        <td>$47/month</td>
+                        <td>$99/month</td>
+                    </tr>
+                    <tr>
+                        <td>Trading Pairs</td>
+                        <td>Up to 3</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td>AI Models</td>
+                        <td>Basic</td>
+                        <td>All</td>
+                        <td>All + Custom</td>
+                    </tr>
+                    <tr>
+                        <td>Risk Management</td>
+                        <td>Standard</td>
+                        <td>Advanced</td>
+                        <td>Custom</td>
+                    </tr>
+                    <tr>
+                        <td>Support</td>
+                        <td>Email</td>
+                        <td>Priority Email</td>
+                        <td>24/7 Phone</td>
+                    </tr>
+                    <tr>
+                        <td>Analytics</td>
+                        <td>Basic</td>
+                        <td>Real-time</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Strategies</td>
+                        <td>❌</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Paper Trading</td>
+                        <td>❌</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>API Access</td>
+                        <td>❌</td>
+                        <td>✓</td>
+                        <td>✓ (Enhanced)</td>
+                    </tr>
+                    <tr>
+                        <td>Team Management</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="faq">
+    <div class="faq-container">
+        <div class="section-header">
+            <h2>Pricing FAQ</h2>
+            <p>Common questions about our pricing plans</p>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I change plans later?</div>
+            <div class="faq-answer">
+                <p>Yes! You can upgrade or downgrade your plan at any time. When upgrading, you'll be charged the prorated difference immediately. When downgrading, the change will take effect at the start of your next billing cycle.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Is there a contract or commitment?</div>
+            <div class="faq-answer">
+                <p>No! All our plans are month-to-month with no long-term commitments. You can cancel anytime without penalties.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">What payment methods do you accept?</div>
+            <div class="faq-answer">
+                <p>We accept all major credit cards (Visa, MasterCard, American Express) and through Stripe's secure payment processing. We do not store your payment information.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Do you offer discounts for annual billing?</div>
+            <div class="faq-answer">
+                <p>Yes! Annual subscribers get 2 months free. That's a 17% discount compared to monthly billing. You'll see the option during checkout.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">What happens if I exceed my plan limits?</div>
+            <div class="faq-answer">
+                <p>If you're on a Starter plan and want to add more trading pairs, you'll be prompted to upgrade to Pro. The system will automatically handle the upgrade and prorated billing.</p>
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Can I get a refund?</div>
+            <div class="faq-answer">
+                <p>We offer a 14-day money-back guarantee for new customers. If you're not satisfied within the first 14 days, contact our support team for a full refund.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content text-center">
+            <h2>Ready to Start Trading Smarter?</h2>
+            <p>Join thousands of traders who are already using Emirald to automate their crypto trading</p>
+            <div class="hero-buttons">
+                <a href="/register" class="btn btn-primary">Start Your Free Trial</a>
+                <a href="/contact" class="btn btn-secondary">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/pricing">Pricing</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/api">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/press">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="/help">Help Center</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/docs">Documentation</a></li>
+                    <li><a href="/status">System Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/cookies">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Emirald. All rights reserved. | Trading involves risk. Past performance is not indicative of future results.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}

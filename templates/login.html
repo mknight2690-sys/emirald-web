@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Emirald{% endblock %}
+{% block meta_title %}Login - Emirald AI Trading Bot{% endblock %}
+{% block meta_description %}Sign in to your Emirald account to access your dashboard and start trading with AI{% endblock %}
+{% block og_title %}Login - Emirald AI Trading Bot{% endblock %}
+{% block og_description %}Access your Emirald account to monitor your trades, view performance, and manage your AI trading bot{% endblock %}
+{% block twitter_title %}Login - Emirald AI Trading Bot{% endblock %}
+{% block twitter_description %}Sign in to your Emirald account and start trading with AI-powered automation{% endblock %}
+
+{% block content %}
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <svg width="32" height="32" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="512" height="512" rx="90" fill="url(#grad)"/>
+                <defs>
+                    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#0d8a6f"/>
+                        <stop offset="100%" stop-color="#0a7b8c"/>
+                    </linearGradient>
+                </defs>
+                <path d="M256 48c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                <circle cx="256" cy="256" r="120" fill="none" stroke="#28e0c0" stroke-width="8"/>
+                <rect x="200" y="200" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="232" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="264" width="80" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <rect x="200" y="296" width="60" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                <path d="M256 356c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                <path d="M196 396l60 60 60-60" stroke="#28e0c0" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Emirald
+        </a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#features">Features</a>
+            <a href="/pricing">Pricing</a>
+            <a href="/faq">FAQ</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="/register" class="btn btn-secondary">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Login Section -->
+<section class="features">
+    <div class="features-container">
+        <div class="auth-container">
+            <div class="auth-form">
+                <h2>Welcome Back</h2>
+                <form method="POST" action="/login">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Sign In">
+                    </div>
+                </form>
+                <div class="form-links">
+                    <p>Don't have an account? <a href="/register">Sign up</a></p>
+                    <p><a href="/forgot-password">Forgot your password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Preview -->
+<section class="features">
+    <div class="features-container">
+        <div class="section-header">
+            <h2>What You'll Get</h2>
+            <p>Access to powerful AI trading tools</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Live Dashboard</h3>
+                <p>Real-time P&L tracking and position management</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>AI Trading Bot</h3>
+                <p>Automated 60-second decision making</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Performance Analytics</h3>
+                <p>Detailed trading reports and insights</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="/features">Features</a></li>
+                    <li><a href="/pricing">Pricing</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/api">API</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/press">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="/help">Help Center</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/docs">Documentation</a></li>
+                    <li><a href="/status">System Status</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/cookies">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Emirald. All rights reserved. | Trading involves risk. Past performance is not indicative of future results.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags -->
+    <title>{% block title %}Emirald - AI-Powered Automated Crypto Trading Bot{% endblock %}</title>
+    <meta name="title" content="{% block meta_title %}Emirald - AI-Powered Automated Crypto Trading Bot{% endblock %}">
+    <meta name="description" content="{% block meta_description %}Turn $40 into $120+ with Emirald's AI trading bot. 60-second LLM decisions, 10x leverage, stop-loss protection. $47/mo. 14-day free trial.{% endblock %}">
+    <meta name="keywords" content="crypto trading bot, automated trading, AI trading, BloFin, cryptocurrency, algorithmic trading, passive income">
+    <meta name="author" content="Emirald">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url_root | trim('/') }}{{ request.path }}">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url_root | trim('/') }}{{ request.path }}">
+    <meta property="og:title" content="{% block og_title %}Emirald - AI Crypto Trading Bot That Thinks For You{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Watch AI make 60-second trading decisions on BloFin. 10x leverage, 3% stop-loss, 25% take-profit. Turn $40→$120 in 30 days. $47/mo.{% endblock %}">
+    <meta property="og:image" content="{{ url_for('static', filename='images/og-banner.png', _external=True) }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Emirald AI Trading Bot Dashboard - Live P&L, Positions, AI Decisions">
+    <meta property="og:site_name" content="Emirald">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.url_root | trim('/') }}{{ request.path }}">
+    <meta name="twitter:title" content="{% block twitter_title %}Emirald - AI Trading Bot That Prints While You Sleep{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}60-second LLM decisions. 10x leverage. 3% stop-loss. $47/mo. Turn $40 into $120+. Try 14 days free.{% endblock %}">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/twitter-card.png', _external=True) }}">
+    <meta name="twitter:image:alt" content="Emirald Dashboard - Live Trading View">
+    <meta name="twitter:site" content="@emiraldtrader">
+    <meta name="twitter:creator" content="@emiraldtrader">
+
+    <!-- Additional Social Meta -->
+    <meta name="theme-color" content="#0d8a6f">
+    <meta name="msapplication-TileColor" content="#0d8a6f">
+
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="style" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" crossorigin>
+    <link rel="preload" as="image" href="{{ url_for('static', filename='images/hero-dashboard.png') }}">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Emirald",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Windows, macOS",
+        "offers": {
+            "@type": "Offer",
+            "price": "47.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "priceValidUntil": "2025-12-31"
+        },
+        "description": "AI-powered automated crypto trading bot for BloFin with 60-second LLM decision cycles, 10x leverage, and built-in risk management.",
+        "featureList": [
+            "60-second AI trading decisions",
+            "10x leverage with 3% stop-loss",
+            "Live BloFin USDT-M Futures trading",
+            "Real-time dashboard with 500ms updates",
+            "Free LLM rotator (no API costs)",
+            "Paper trading demo mode"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "Emirald"
+        }
+    }
+    </script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <svg width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="512" height="512" rx="90" fill="url(#grad)"/>
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0d8a6f"/>
+                            <stop offset="100%" stop-color="#0a7b8c"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M256 48c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                    <circle cx="256" cy="256" r="120" fill="none" stroke="#28e0c0" stroke-width="8"/>
+                    <rect x="200" y="200" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                    <rect x="200" y="232" width="112" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                    <rect x="200" y="264" width="80" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                    <rect x="200" y="296" width="60" height="12" rx="6" fill="#eaf0ff" fill-opacity="0.7"/>
+                    <path d="M256 356c-12 0-24 6-30 16-6 10-6 22 0 32 6 10 18 16 30 16s24-6 30-16c6-10 6-22 0-32-6-10-18-16-30-16z" fill="#38c9a7"/>
+                    <path d="M196 396l60 60 60-60" stroke="#28e0c0" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p class="loading-text">Loading Emirald...</p>
+        </div>
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-container" class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
