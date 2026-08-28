@@ -1,0 +1,23 @@
+# Hugging Face Spaces Free Tier Deployment for Emirald Flask Backend
+# Create a new Space at https://huggingface.co/new-space
+# Select "Docker" as the SDK, then upload these files
+
+# Required files for HF Space:
+# - Dockerfile (this repo)
+# - requirements.txt
+# - app.py
+# - templates/ (all templates)
+# - static/ (all static files)
+# - .env.example (not .env - add secrets in HF Space settings)
+
+# For HF Space Settings → Variables and secrets, add:
+# - STRIPE_SECRET_KEY (secret)
+# - STRIPE_PUBLISHABLE_KEY (variable)
+# - STRIPE_WEBHOOK_SECRET (secret)
+# - FLASK_SECRET_KEY (secret)
+# - HF_ROTATOR_URL (variable) = https://mknight2690-sys-emirald-rotator.hf.space
+
+# The Space will be available at:
+# https://mknight2690-sys-emirald-web.hf.space
+
+# Always-on for public spaces (free forever)
